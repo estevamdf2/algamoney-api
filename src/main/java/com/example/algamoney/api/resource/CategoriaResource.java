@@ -1,13 +1,22 @@
 package com.example.algamoney.api.resource;
 
+import java.net.URI;
 import java.util.List;
 
+import javax.servlet.http.HttpServletResponse;
+
+import org.springframework.http.HttpStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.example.algamoney.api.repository.CategoriaRepository;
+import com.mysql.fabric.Response;
 import com.example.algamoney.api.model.Categoria;
 
 /**
@@ -32,5 +41,28 @@ public class CategoriaResource {
 	@GetMapping
 	public List<Categoria> listar(){
 		return categoriaRepository.findAll();
+	}
+	
+	/**
+	 * Com a anotação @ResponseStatus
+	 * voce retorna o código 201 ao criar
+	 * o recurso.
+	 * 
+	 * HttpServletResponse usada para retornar
+	 * o código da categoria criada na resposta
+	 * do método.
+	 * @param categoria
+	 */
+	@PostMapping
+	@ResponseStatus(HttpStatus.CREATED)
+	public void criar(@RequestBody Categoria categoria, HttpServletResponse response) {
+		Categoria categoriaSalva = categoriaRepository.save(categoria);
+		
+		URI uri = ServletUriComponentsBuilder.fromCurrentRequestUri().path("/{codigo}")
+				.buildAndExpand(categoriaSalva.getCodigo()).toUri();
+		response.setHeader("Location", uri.toASCIIString());
+		
+		//inserir o recurso no body
+		
 	}
 }
