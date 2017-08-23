@@ -7,6 +7,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 
 @Entity
@@ -18,6 +19,7 @@ public class Pessoa {
 	public Long codigo;
 	
 	@NotNull
+	@Size(min = 3, max = 50)
 	private String nome;
 	
 	@NotNull
