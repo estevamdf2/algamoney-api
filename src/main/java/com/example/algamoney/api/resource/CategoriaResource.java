@@ -9,6 +9,7 @@ import javax.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.example.algamoney.api.repository.CategoriaRepository;
+import com.example.algamoney.api.event.RecursoCriadoEvent;
 import com.example.algamoney.api.model.Categoria;
 
 /**
@@ -38,12 +40,15 @@ public class CategoriaResource {
 	 */
 	@Autowired 
 	private CategoriaRepository categoriaRepository;
-	
+
+	@Autowired
+	private ApplicationEventPublisher publisher;
+
 	@GetMapping
 	public List<Categoria> listar(){
 		return categoriaRepository.findAll();
 	}
-	
+
 	/**
 	 * Com a anotação @ResponseStatus
 	 * voce retorna o código 201 ao criar
@@ -57,21 +62,15 @@ public class CategoriaResource {
 	@PostMapping
 	public ResponseEntity<Categoria> criar(@Valid @RequestBody Categoria categoria, HttpServletResponse response) {
 		Categoria categoriaSalva = categoriaRepository.save(categoria);
-		
-		URI uri = ServletUriComponentsBuilder.fromCurrentRequestUri().path("/{codigo}")
-				.buildAndExpand(categoriaSalva.getCodigo()).toUri();
-		response.setHeader("Location", uri.toASCIIString());
-		
-		//inserir o recurso no body
-		
-		return ResponseEntity.created(uri).body(categoriaSalva);
+		publisher.publishEvent(new RecursoCriadoEvent(this, response, categoriaSalva.getCodigo()));
+		return ResponseEntity.status(HttpStatus.CREATED).body(categoriaSalva);
 	}
-	
+
 	@GetMapping("/{codigo}")
 	public ResponseEntity<Categoria> buscarPeloCodigo(@PathVariable Long codigo) {
-		
+
 		Categoria categoriaBusca = categoriaRepository.findOne(codigo);
-		
+
 		/*
 		 *Mostrar erro 404 caso não
 		 *tenha a categoria cadastrada. 
@@ -79,7 +78,7 @@ public class CategoriaResource {
 		if(categoriaBusca != null) {
 			return new ResponseEntity<Categoria>(categoriaBusca,HttpStatus.OK);
 		}
-		
+
 		return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 	}
 }
