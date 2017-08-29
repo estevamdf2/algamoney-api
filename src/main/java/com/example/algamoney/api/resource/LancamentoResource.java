@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.algamoney.api.event.RecursoCriadoEvent;
 import com.example.algamoney.api.model.Lancamento;
 import com.example.algamoney.api.repository.LancamentoRepository;
+import com.mysql.fabric.Response;
 
 
 @RestController
@@ -38,9 +39,10 @@ public class LancamentoResource {
 	}
 	
 	@GetMapping("/{codigo}")
-	public Lancamento buscarPorCodigo(@PathVariable Long codigo){
-		
-		return lancamentoRepository.findOne(codigo);
+	public ResponseEntity<Lancamento> buscarPorCodigo(@PathVariable Long codigo){
+		Lancamento lancamento = lancamentoRepository.findOne(codigo);
+		//Mostrar erro 404 caso não tenha o lancamento consultado
+		return lancamento != null ? ResponseEntity.ok(lancamento) : ResponseEntity.notFound().build();
 	}
 	
 	@PostMapping
