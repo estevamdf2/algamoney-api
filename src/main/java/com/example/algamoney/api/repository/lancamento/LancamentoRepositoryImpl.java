@@ -52,7 +52,7 @@ public class LancamentoRepositoryImpl implements LancamentoRepositoryQuery{
 			/*Sem metamodel
 			  predicates.add(builder.like(builder.lower(root.get("descricao")),"%" + lancamentoFilter.getDescricao().toLowerCase() + "%"));
 			*/
-			
+			 
 			//Usando o metamodel
 			predicates.add(builder.like(
 					builder.lower(root.get(Lancamento_.descricao)),"%" + lancamentoFilter.getDescricao().toLowerCase() + "%"));
