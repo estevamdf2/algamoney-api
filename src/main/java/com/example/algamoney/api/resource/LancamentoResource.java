@@ -30,6 +30,7 @@ import com.example.algamoney.api.event.RecursoCriadoEvent;
 import com.example.algamoney.api.exception.PessoaInexistenteOuInativaException;
 import com.example.algamoney.api.exceptionhandler.AlgaMoneyExceptionHandler.Erro;
 import com.example.algamoney.api.model.Lancamento;
+import com.example.algamoney.api.projection.ResumoLancamento;
 import com.example.algamoney.api.repository.LancamentoRepository;
 import com.example.algamoney.api.repository.filter.LancamentoFilter;
 import com.example.algamoney.api.service.LancamentoService;
@@ -52,10 +53,23 @@ public class LancamentoResource {
 	@Autowired
 	private MessageSource messageSource;
 	
-	@PreAuthorize("hasAuthority('ROLE_PESQUISAR_LANCAMENTO') and #oauth2.hasScope('read')")
 	@GetMapping
+	@PreAuthorize("hasAuthority('ROLE_PESQUISAR_LANCAMENTO') and #oauth2.hasScope('read')")
 	public Page<Lancamento> pesquisar(LancamentoFilter lancamentoFilter, Pageable pageable){
 		return lancamentoRepository.filtrar(lancamentoFilter, pageable);
+	}
+	
+	/**
+	 * Os dois fazem requisição GET.
+	 * O que diferenciará a chamada será o params=resumo
+	 * @param lancamentoFilter
+	 * @param pageable
+	 * @return
+	 */
+	@GetMapping(params = "resumo")
+	@PreAuthorize("hasAuthority('ROLE_PESQUISAR_LANCAMENTO') and #oauth2.hasScope('read')")
+	public Page<ResumoLancamento> resumir(LancamentoFilter lancamentoFilter, Pageable pageable){
+		return lancamentoRepository.resumir(lancamentoFilter, pageable);
 	}
 	
 	@PreAuthorize("hasAuthority('ROLE_PESQUISAR_LANCAMENTO') and #oauth2.hasScope('read')")
