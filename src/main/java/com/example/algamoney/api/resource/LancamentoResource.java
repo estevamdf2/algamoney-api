@@ -105,8 +105,8 @@ public class LancamentoResource {
 		lancamentoRepository.delete(codigo);
 	}
 	
-	@PutMapping("{codigo}")
-	@PreAuthorize("hasAutority('ROLE_CADASTRAR_LANCAMENTO')")
+	@PreAuthorize("hasAuthority('ROLE_CADASTRAR_LANCAMENTO') and #oauth2.hasScope('write')")
+	@PutMapping("/{codigo}")
 	public ResponseEntity<Lancamento> atualizar(@PathVariable Long codigo, @Valid @RequestBody Lancamento lancamento){
 		try {
 			Lancamento lancamentoSalvo = lancamentoService.atualizar(codigo, lancamento);
