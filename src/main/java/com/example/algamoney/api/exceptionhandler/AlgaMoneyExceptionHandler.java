@@ -143,9 +143,6 @@ public class AlgaMoneyExceptionHandler extends ResponseEntityExceptionHandler {
 			this.mensagemDesenvolvedor = mensagemDesenvolvedor;
 		}
 		
-		
-		
-		
 	}
 	
 }

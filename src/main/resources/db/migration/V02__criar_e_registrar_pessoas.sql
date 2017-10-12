@@ -12,12 +12,12 @@ CREATE TABLE pessoa (
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 INSERT INTO pessoa (nome,ativo,logradouro,numero,complemento,bairro,cep,cidade,estado) 
-	   VALUES ('Chuck Norris', true, 'Brooklin street win', '07', null, 'Brooklin','05555-777','Nova York','ex');
+	   VALUES ('Chuck Norris', true, 'Brooklin street win', '07', null, 'Brooklin','05.555-777','Nova York','ex');
 INSERT INTO pessoa (nome,ativo,logradouro,numero,complemento,bairro,cep,cidade,estado) 
-	   VALUES ('Dercy Gonçalves', false, 'Rua da zueira s/n conjunto z lote', '01', 'Zueiropolis', 'Rio de janeiro','05555-777','Rio de Janeiro','rj');
+	   VALUES ('Dercy Gonçalves', false, 'Rua da zueira s/n conjunto z lote', '01', 'Zueiropolis', 'Rio de janeiro','05.555-777','Rio de Janeiro','rj');
 INSERT INTO pessoa (nome,ativo,logradouro,numero,complemento,bairro,cep,cidade,estado) 
-	   VALUES ('Marcos Sousa', true, 'SQS 211 Bloco B apt', '301', null, 'Asa Sul','05555-777','Brasilia','df');
+	   VALUES ('Marcos Sousa', true, 'SQS 211 Bloco B apt', '301', null, 'Asa Sul','05.555-777','Brasilia','df');
 INSERT INTO pessoa (nome,ativo,logradouro,numero,complemento,bairro,cep,cidade,estado) 
-	   VALUES ('Zeze Polessa', true, 'Avenida das palmeiras conunto w casa', '01', 'Bonfinopolis', 'Bonfinopolis','05555-777','Rio de Janeiro','rj');
+	   VALUES ('Zeze Polessa', true, 'Avenida das palmeiras conunto w casa', '01', 'Bonfinopolis', 'Bonfinopolis','05.555-777','Rio de Janeiro','rj');
 INSERT INTO pessoa (nome,ativo,logradouro,numero,complemento,bairro,cep,cidade,estado) 
-	   VALUES ('Ayrton Senna', true, 'Avenida dos campeões Washington Luiz casa', '12', null, 'Interlagos','05555-777','São Paulo','sp');
+	   VALUES ('Ayrton Senna', true, 'Avenida dos campeões Washington Luiz casa', '12', null, 'Interlagos','72.000-710','São Paulo','sp');
