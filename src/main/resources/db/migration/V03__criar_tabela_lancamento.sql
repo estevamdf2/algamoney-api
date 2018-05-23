@@ -1,16 +1,30 @@
-CREATE TABLE lancamento (
-	codigo				BIGINT(20) 		PRIMARY KEY AUTO_INCREMENT,
-	descricao 			VARCHAR(50) 	NOT NULL,
-	data_vencimento 	DATE	 		NOT NULL,
-	data_pagamento  	DATE			NOT NULL,
-	valor				DECIMAL(10,2)	NOT NULL,
-	observacao			VARCHAR(100),
-	tipo				VARCHAR(20)		NOT NULL,
-	codigo_categoria	BIGINT(20)		NOT NULL,
-	codigo_pessoa		BIGINT(20)		NOT NULL,
-	FOREIGN KEY (codigo_categoria)  REFERENCES	categoria(codigo),
-	FOREIGN KEY (codigo_pessoa)  	REFERENCES	pessoa(codigo)
-)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+CREATE TABLE "lancamento"  ( 
+	"codigo"          	serial NOT NULL,
+	"descricao"       	varchar(50) NOT NULL,
+	"data_vencimento" 	date NOT NULL,
+	"data_pagamento"  	date NOT NULL,
+	"valor"           	decimal(15,5) NOT NULL,
+	"observacao"      	varchar(100) NULL,
+	"tipo"            	varchar(20) NOT NULL,
+	"codigo_categoria"	int4 NOT NULL,
+	"codigo_pessoa"   	int4 NOT NULL,
+	PRIMARY KEY("codigo")
+);
+
+ALTER TABLE "lancamento"
+	ADD CONSTRAINT "categoria_lancamento"
+	FOREIGN KEY("codigo_categoria")
+	REFERENCES "categoria"("codigo")
+	ON DELETE NO ACTION 
+	ON UPDATE NO ACTION;
+
+ALTER TABLE "lancamento"
+	ADD CONSTRAINT "pessoa_lancamento"
+	FOREIGN KEY("codigo_pessoa")
+	REFERENCES "pessoa"("codigo")
+	ON DELETE NO ACTION 
+	ON UPDATE NO ACTION ;
+
 
 INSERT INTO lancamento (descricao,data_vencimento,data_pagamento,valor, observacao, tipo,codigo_categoria,codigo_pessoa) 
 	   VALUES ('Salário Mensal', '2017-02-10', '2017-02-10', 100.32,  null, 'DESPESA',1,1);

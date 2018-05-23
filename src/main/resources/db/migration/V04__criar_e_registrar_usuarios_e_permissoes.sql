@@ -1,22 +1,37 @@
-CREATE TABLE usuario (
-	codigo BIGINT(20) PRIMARY KEY,
-	nome VARCHAR(50) NOT NULL,
-	email VARCHAR(50) NOT NULL,
-	senha VARCHAR(150) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-CREATE TABLE permissao (
-	codigo BIGINT(20) PRIMARY KEY,
-	descricao VARCHAR(50) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+CREATE TABLE "usuario"  ( 
+	"codigo"	serial NOT NULL,
+	"nome"  	varchar(50) NOT NULL,
+	"email" 	varchar(50) NOT NULL,
+	"senha" 	varchar(150) NOT NULL,
+	PRIMARY KEY("codigo")
+);
 
-CREATE TABLE usuario_permissao (
-	codigo_usuario BIGINT(20) NOT NULL,
-	codigo_permissao BIGINT(20) NOT NULL,
-	PRIMARY KEY (codigo_usuario, codigo_permissao),
-	FOREIGN KEY (codigo_usuario) REFERENCES usuario(codigo),
-	FOREIGN KEY (codigo_permissao) REFERENCES permissao(codigo)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE "permissao"  ( 
+	"codigo"   	serial NOT NULL,
+	"descricao"	varchar(50) NOT NULL,
+	PRIMARY KEY("codigo")
+);
+
+CREATE TABLE "usuario_permissao"  ( 
+	"codigo_usuario"  	int4 NULL,
+	"codigo_permissao"	int4 NULL 
+);
+
+ALTER TABLE "usuario_permissao"
+	ADD CONSTRAINT "permissao_usuario_permissao"
+	FOREIGN KEY("codigo_permissao")
+	REFERENCES "permissao"("codigo")
+	ON DELETE NO ACTION 
+	ON UPDATE NO ACTION ;
+
+ALTER TABLE "usuario_permissao"
+	ADD CONSTRAINT "usuario_usuario_permissao"
+	FOREIGN KEY("codigo_usuario")
+	REFERENCES "usuario"("codigo")
+	ON DELETE NO ACTION 
+	ON UPDATE NO ACTION ;
 
 INSERT INTO usuario (codigo, nome, email, senha) values (1, 'Administrador', 'admin@algamoney.com', '$2a$10$X607ZPhQ4EgGNaYKt3n4SONjIv9zc.VMWdEuhCuba7oLAL5IvcL5.');
 INSERT INTO usuario (codigo, nome, email, senha) values (2, 'Marcos Sousa', 'marcos@algamoney.com', '$2a$10$IOMCkZdpaxca4WruuYpHP.jDfOmqV/7ML.0jvGI0f8BHAUB.7stEK');

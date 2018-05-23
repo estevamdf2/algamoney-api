@@ -1,15 +1,16 @@
-CREATE TABLE pessoa (
-	codigo		BIGINT(20) 	PRIMARY KEY AUTO_INCREMENT,
-	nome 		VARCHAR(50) 	NOT NULL,
-	ativo 		BOOLEAN 	NOT NULL,
-	logradouro  	VARCHAR(60),
-	numero		VARCHAR(10),
-	complemento	VARCHAR(50),
-	bairro		VARCHAR(50),
-	cep		VARCHAR(10),
-	cidade		VARCHAR(50),
-	estado		VARCHAR(2)
-)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+CREATE TABLE "pessoa"  ( 
+	"codigo"     	serial NOT NULL,
+	"nome"       	varchar(50) NOT NULL,
+	"ativo"      	bool NOT NULL,
+	"logradouro" 	varchar(60) NULL,
+	"numero"     	varchar(10) NULL,
+	"complemento"	varchar(50) NULL,
+	"bairro"     	varchar(50) NULL,
+	"cep"        	varchar(10) NULL,
+	"cidade"     	varchar(50) NULL,
+	"estado"     	varchar(2) NULL,
+	PRIMARY KEY("codigo")
+);
 
 INSERT INTO pessoa (nome,ativo,logradouro,numero,complemento,bairro,cep,cidade,estado) 
 	   VALUES ('Chuck Norris', true, 'Brooklin street win', '07', null, 'Brooklin','05.555-777','Nova York','ex');
